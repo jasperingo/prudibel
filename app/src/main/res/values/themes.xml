@@ -1,0 +1,20 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.Prudibel" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/plum_web_200</item>
+        <item name="colorPrimaryVariant">@color/plum_web_500</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/pansy_purple_200</item>
+        <item name="colorSecondaryVariant">@color/pansy_purple_500</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <!-- Customize your theme here. -->
+        <item name="colorOnSurface">@color/black</item>
+        <item name="colorSurface">@color/white</item>
+        <item name="colorOnBackground">@color/black</item>
+        <item name="android:colorBackground">@color/white</item>
+    </style>
+</resources>

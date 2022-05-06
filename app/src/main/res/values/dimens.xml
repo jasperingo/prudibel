@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="huge">40dp</dimen>
+    <dimen name="xxLarge">28dp</dimen>
+    <dimen name="xLarge">24dp</dimen>
+    <dimen name="large">20dp</dimen>
+    <dimen name="medium">16dp</dimen>
+    <dimen name="small">12dp</dimen>
+    <dimen name="xSmall">8dp</dimen>
+    <dimen name="xxSmall">4dp</dimen>
+    <dimen name="xxxSmall">2dp</dimen>
+
+    <dimen name="hugeText">40sp</dimen>
+    <dimen name="xxLargeText">28sp</dimen>
+    <dimen name="xLargeText">24sp</dimen>
+    <dimen name="largeText">20sp</dimen>
+    <dimen name="mediumText">16sp</dimen>
+    <dimen name="smallText">12sp</dimen>
+    <dimen name="xSmallText">8sp</dimen>
+    <dimen name="xxSmallText">4sp</dimen>
+</resources>

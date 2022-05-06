@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Prudibel</string>
+    <string name="Log_in">Log In</string>
+    <string name="Register">Register</string>
+    <string name="Full_name">Full name</string>
+    <string name="Email">Email</string>
+    <string name="Password">Password</string>
+    <string name="Send">Send</string>
+    <string name="Enter_your_message">Enter your message</string>
+    <string name="I_don_t_have_an_account">I don\'t have an account</string>
+    <string name="I_already_have_an_account">I already have an account</string>
+
+</resources>

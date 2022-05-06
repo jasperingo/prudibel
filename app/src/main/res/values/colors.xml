@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="plum_web_200">#e785ea</color>
+    <color name="plum_web_500">#e062e4</color>
+    <color name="pansy_purple_200">#82204a</color>
+    <color name="pansy_purple_500">#52142f</color>
+    <color name="red_200">#FF0000</color>
+    <color name="gray_200">#d0ddd9</color>
+</resources>

@@ -1,12 +1,11 @@
 package com.jasper.prudibel
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 
 class MainActivity : AppCompatActivity() {
@@ -33,6 +32,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        toolBar.setupWithNavController(navController, AppBarConfiguration(navController.graph))
+        toolBar.setupWithNavController(navController, AppBarConfiguration(setOf(R.id.messagesFragment, R.id.authFragment)))
     }
 }

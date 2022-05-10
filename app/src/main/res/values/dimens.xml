@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="huge">40dp</dimen>
+    <dimen name="xxxLarge">32dp</dimen>
     <dimen name="xxLarge">28dp</dimen>
     <dimen name="xLarge">24dp</dimen>
     <dimen name="large">20dp</dimen>

@@ -22,7 +22,7 @@
         >
         <com.google.android.material.textfield.TextInputEditText
             style="@style/TextInputStyle"
-            android:inputType="text"
+            android:inputType="text|textAutoComplete"
             android:autofillHints="name"
             />
     </com.google.android.material.textfield.TextInputLayout>
@@ -39,7 +39,7 @@
         >
         <com.google.android.material.textfield.TextInputEditText
             style="@style/TextInputStyle"
-            android:inputType="textEmailAddress"
+            android:inputType="textEmailAddress|textAutoComplete"
             android:autofillHints="emailAddress"
             />
     </com.google.android.material.textfield.TextInputLayout>

@@ -10,4 +10,11 @@
     <string name="I_don_t_have_an_account">I don\'t have an account</string>
     <string name="I_already_have_an_account">I already have an account</string>
 
+    <string name="Registered_successfully">Registered successfully</string>
+    <string name="Enter_your_full_name">Enter your full name</string>
+    <string name="Enter_a_valid_email">Enter a valid email</string>
+    <string name="Email_already_exists">Email already exists</string>
+    <string name="Password_is_too_short">Password is too short</string>
+    <string name="No_internet_connection">No internet connection</string>
+    <string name="An_error_occurred">An error occurred</string>
 </resources>

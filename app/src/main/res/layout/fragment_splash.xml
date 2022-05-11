@@ -16,15 +16,16 @@
         android:textColor="?attr/colorPrimary"
         android:textStyle="bold"
         android:textAlignment="center"
-        android:layout_above="@id/start"
+        android:layout_above="@id/progress_bar"
         android:layout_marginBottom="@dimen/huge"
         />
 
-    <Button
-        android:id="@+id/start"
+    <ProgressBar
+        android:id="@+id/progress_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/app_name"
+        android:padding="@dimen/xxSmall"
+        android:background="@color/plum_web_200"
         android:layout_centerInParent="true"
         />
 

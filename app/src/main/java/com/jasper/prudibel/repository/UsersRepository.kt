@@ -21,4 +21,13 @@ object UsersRepository {
                     ?.addOnFailureListener(onFailure)
             }.addOnFailureListener(onFailure)
     }
+
+    fun auth(email: String, password: String, onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
+        auth.signInWithEmailAndPassword(email, password)
+            .addOnSuccessListener { onSuccess() }
+            .addOnFailureListener(onFailure)
+    }
+
+    fun readOne() = auth.currentUser
+
 }

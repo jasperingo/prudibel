@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.button.MaterialButton
@@ -14,18 +13,14 @@ import com.google.android.material.textfield.TextInputLayout
 import com.jasper.prudibel.R
 import com.jasper.prudibel.view_model.RegisterViewModel
 
-class RegisterFragment : Fragment() {
-
-    private val loadingDialogFragment = LoadingDialogFragment()
+class RegisterFragment : HaveLoadingDialogFragment() {
 
     private val viewModel: RegisterViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_register, container, false)
-    }
+    ): View? = inflater.inflate(R.layout.fragment_register, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -71,13 +66,5 @@ class RegisterFragment : Fragment() {
     private fun setInputError(error: Int?, input: TextInputLayout) {
         input.errorIconDrawable = null
         input.error = if (error != null) getString(error) else null
-    }
-
-    private fun setLoadingView(value: Boolean) {
-        if (value && (loadingDialogFragment.dialog == null || loadingDialogFragment.dialog?.isShowing == false)) {
-            loadingDialogFragment.show(requireActivity().supportFragmentManager, "Loading")
-        } else if (!value && loadingDialogFragment.dialog?.isShowing == true) {
-            loadingDialogFragment.dismiss()
-        }
     }
 }

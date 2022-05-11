@@ -1,14 +1,17 @@
 package com.jasper.prudibel.fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.button.MaterialButton
+import com.google.android.material.textfield.TextInputLayout
 import com.jasper.prudibel.R
 import com.jasper.prudibel.list.MessagesListAdapter
 import com.jasper.prudibel.model.Message
@@ -20,7 +23,24 @@ class MessagesFragment : Fragment() {
 
     private lateinit var listView: RecyclerView
 
-    private val messages = listOf(Message("Hello"), Message("How are you"), Message("Are you coming today?"))
+    private lateinit var sendButton: MaterialButton
+
+    private val messages = mutableListOf(
+        Message("That is good to know.", Message.SenderType.BOT),
+        Message("I'm feeling great", Message.SenderType.USER),
+        Message("Welcome, How are you", Message.SenderType.BOT),
+        Message("Hello", Message.SenderType.USER),
+    )
+
+    private val textWatcher = object: TextWatcher {
+        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+        override fun onTextChanged(text: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            sendButton.isEnabled = !text.isNullOrBlank()
+        }
+
+        override fun afterTextChanged(p0: Editable?) {}
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,17 +49,28 @@ class MessagesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         listView = view.findViewById(R.id.messages_list)
-        listView.layoutManager = LinearLayoutManager(requireContext())
+        listView.layoutManager = LinearLayoutManager(requireContext()).apply { reverseLayout = true }
         listView.adapter = MessagesListAdapter(messages)
 
-        val nameTextView = view.findViewById<TextView>(R.id.name_view)
+        val messageInput = view.findViewById<TextInputLayout>(R.id.message_input)
 
-        userViewModel.user.observe(viewLifecycleOwner) {
-            if (it != null) {
-                nameTextView.text = "${it.displayName} ${it.email}"
-            }
+        messageInput.editText?.addTextChangedListener(textWatcher)
+
+        sendButton = view.findViewById(R.id.send_button)
+
+        sendButton.setOnClickListener {
+            messages.add(0, Message(messageInput.editText!!.text.toString(), Message.SenderType.USER))
+            onMessageAdded()
+
+            messages.add(0, Message(userViewModel.user.value!!.displayName!!, Message.SenderType.BOT))
+            onMessageAdded()
         }
+    }
 
+    private fun onMessageAdded() {
+        (listView.adapter as MessagesListAdapter).notifyItemInserted(0)
+        listView.scrollToPosition(0)
     }
 }

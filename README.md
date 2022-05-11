@@ -1,2 +1,2 @@
 # Prudibel
-## A coronary disease chat bot
+## A coronary disease prediction chat bot

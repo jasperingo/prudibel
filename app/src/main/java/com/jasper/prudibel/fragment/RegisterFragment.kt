@@ -25,8 +25,10 @@ class RegisterFragment : HaveLoadingDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val navController = findNavController()
+
         view.findViewById<Button>(R.id.auth_nav_button).setOnClickListener {
-            findNavController().navigateUp()
+            navController.navigateUp()
         }
 
         val nameInput = view.findViewById<TextInputLayout>(R.id.full_name_input)
@@ -54,7 +56,7 @@ class RegisterFragment : HaveLoadingDialogFragment() {
         viewModel.success.observe(viewLifecycleOwner) {
             if (it)  {
                 Toast.makeText(requireContext(), R.string.Registered_successfully, Toast.LENGTH_SHORT).show()
-                findNavController().navigate(R.id.action_registerFragment_to_messagesFragment)
+                navController.navigate(R.id.action_registerFragment_to_messagesFragment)
             }
         }
 

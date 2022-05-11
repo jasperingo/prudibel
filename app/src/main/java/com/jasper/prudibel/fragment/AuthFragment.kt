@@ -25,8 +25,10 @@ class AuthFragment : HaveLoadingDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val navController = findNavController()
+
         view.findViewById<Button>(R.id.auth_nav_button).setOnClickListener {
-            findNavController().navigate(R.id.action_authFragment_to_registerFragment)
+            navController.navigate(R.id.action_authFragment_to_registerFragment)
         }
 
         val emailInput = view.findViewById<TextInputLayout>(R.id.email_input)
@@ -44,8 +46,8 @@ class AuthFragment : HaveLoadingDialogFragment() {
 
         viewModel.success.observe(viewLifecycleOwner) {
             if (it)  {
-                Toast.makeText(requireContext(), R.string.Registered_successfully, Toast.LENGTH_SHORT).show()
-                findNavController().navigate(R.id.action_authFragment_to_messagesFragment)
+                Toast.makeText(requireContext(), R.string.Logged_in_successfully, Toast.LENGTH_SHORT).show()
+                navController.navigate(R.id.action_authFragment_to_messagesFragment)
             }
         }
 

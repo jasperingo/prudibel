@@ -30,4 +30,6 @@ object UsersRepository {
 
     fun readOne() = auth.currentUser
 
+    fun unAuth() = auth.signOut()
+
 }

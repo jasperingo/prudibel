@@ -11,4 +11,6 @@ class UserViewModel: ViewModel() {
         MutableLiveData(UsersRepository.readOne())
     }
 
+    fun logOut() = UsersRepository.unAuth()
+
 }

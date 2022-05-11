@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">Prudibel</string>
+    <string name="Cancel">Cancel</string>
+    <string name="Proceed">Proceed</string>
     <string name="Log_in">Log In</string>
+    <string name="Log_out">Log out</string>
     <string name="Register">Register</string>
     <string name="Full_name">Full name</string>
     <string name="Email">Email</string>
@@ -10,6 +13,9 @@
     <string name="I_don_t_have_an_account">I don\'t have an account</string>
     <string name="I_already_have_an_account">I already have an account</string>
 
+    <string name="Confirm_log_out">Confirm log out</string>
+    <string name="_confirm_log_out">Are you sure you want to log out?</string>
+    <string name="Logged_in_successfully">Logged in successfully</string>
     <string name="Registered_successfully">Registered successfully</string>
     <string name="Enter_your_full_name">Enter your full name</string>
     <string name="Enter_a_valid_email">Enter a valid email</string>

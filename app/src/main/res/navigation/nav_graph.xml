@@ -31,7 +31,12 @@
         android:name="com.jasper.prudibel.fragment.MessagesFragment"
         android:label="@string/app_name"
         tools:layout="@layout/fragment_messages"
-        />
+        >
+        <action
+            app:destination="@id/confirmLogOutDialogFragment"
+            android:id="@+id/action_messagesFragment_to_confirmLogOutDialogFragment"
+            />
+    </fragment>
 
     <fragment
         android:id="@+id/authFragment"
@@ -64,5 +69,17 @@
             android:id="@+id/action_registerFragment_to_messagesFragment"
             />
     </fragment>
+
+    <dialog
+        android:id="@+id/confirmLogOutDialogFragment"
+        android:name="com.jasper.prudibel.fragment.ConfirmLogOutDialogFragment"
+        >
+        <action
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true"
+            app:destination="@id/authFragment"
+            android:id="@+id/action_confirmLogOutDialogFragment_to_authFragment"
+            />
+    </dialog>
 
 </navigation>

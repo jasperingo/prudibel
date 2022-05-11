@@ -11,9 +11,9 @@ class LoadingDialogFragment: DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
-            val builder = AlertDialog.Builder(it)
-            builder.setView(R.layout.fragment_loading_dialog)
-            builder.create()
+            AlertDialog.Builder(it)
+                .setView(R.layout.fragment_loading_dialog)
+                .create()
         } ?: throw IllegalStateException("Activity cannot be null")
     }
 

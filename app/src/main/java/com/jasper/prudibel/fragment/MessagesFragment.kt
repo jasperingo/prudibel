@@ -15,22 +15,18 @@ import com.google.android.material.textfield.TextInputLayout
 import com.jasper.prudibel.R
 import com.jasper.prudibel.list.MessagesListAdapter
 import com.jasper.prudibel.model.Message
+import com.jasper.prudibel.view_model.MessageViewModel
 import com.jasper.prudibel.view_model.UserViewModel
 
 class MessagesFragment : Fragment() {
 
     private val userViewModel: UserViewModel by viewModels()
 
+    private val messageViewModel: MessageViewModel by viewModels()
+
     private lateinit var listView: RecyclerView
 
     private lateinit var sendButton: MaterialButton
-
-    private val messages = mutableListOf(
-        Message("That is good to know.", Message.SenderType.BOT),
-        Message("I'm feeling great", Message.SenderType.USER),
-        Message("Welcome, How are you", Message.SenderType.BOT),
-        Message("Hello", Message.SenderType.USER),
-    )
 
     private val textWatcher = object: TextWatcher {
         override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
@@ -52,7 +48,9 @@ class MessagesFragment : Fragment() {
 
         listView = view.findViewById(R.id.messages_list)
         listView.layoutManager = LinearLayoutManager(requireContext()).apply { reverseLayout = true }
-        listView.adapter = MessagesListAdapter(messages)
+        listView.adapter = MessagesListAdapter(messageViewModel.messages.value!!)
+
+        messageViewModel.messages.observe(viewLifecycleOwner) { onMessageAdded() }
 
         val messageInput = view.findViewById<TextInputLayout>(R.id.message_input)
 
@@ -61,10 +59,10 @@ class MessagesFragment : Fragment() {
         sendButton = view.findViewById(R.id.send_button)
 
         sendButton.setOnClickListener {
-            messages.add(0, Message(messageInput.editText!!.text.toString(), Message.SenderType.USER))
+            messageViewModel.addMessage(Message(messageInput.editText!!.text.toString(), Message.SenderType.USER))
             onMessageAdded()
 
-            messages.add(0, Message(userViewModel.user.value!!.displayName!!, Message.SenderType.BOT))
+            messageViewModel.addMessage(Message(userViewModel.user.value!!.displayName!!, Message.SenderType.BOT))
             onMessageAdded()
         }
     }

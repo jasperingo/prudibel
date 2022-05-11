@@ -34,7 +34,7 @@ class MessagesListAdapter(private val messages: List<Message>):
 
     override fun getItemViewType(position: Int): Int {
         val item = messages[position]
-        return when (item.sender) {
+        return when (item.sender!!) {
             Message.SenderType.BOT -> ViewType.MESSAGE_LEFT.type
             Message.SenderType.USER -> ViewType.MESSAGE_RIGHT.type
         }

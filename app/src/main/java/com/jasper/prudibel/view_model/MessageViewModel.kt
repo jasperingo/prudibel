@@ -16,14 +16,19 @@ class MessageViewModel(application: Application): AndroidViewModel(application) 
         MutableLiveData(UsersRepository.readOne())
     }
 
-    val messages: MutableLiveData<MutableList<Message>> by lazy {
-        fetchMessages()
-        MutableLiveData(mutableListOf())
-    }
-
     val messageAdded: MutableLiveData<Boolean> = MutableLiveData(false)
 
     val messageLoaded: MutableLiveData<Boolean> = MutableLiveData(false)
+
+    val messagesLoading: MutableLiveData<Boolean> = MutableLiveData(true)
+
+//    val messagesError: MutableLiveData<Boolean> = MutableLiveData(false)
+
+    val messages: MutableLiveData<MutableList<Message>> by lazy {
+        fetchMessages()
+        messagesLoading.postValue(true)
+        MutableLiveData(mutableListOf())
+    }
 
     fun addMessage(content: String) {
         MessagesRepository.create(
@@ -64,6 +69,7 @@ class MessageViewModel(application: Application): AndroidViewModel(application) 
 
             if (loaded) {
                 messageLoaded.postValue(true)
+                messagesLoading.postValue(false)
             }
         }
     }

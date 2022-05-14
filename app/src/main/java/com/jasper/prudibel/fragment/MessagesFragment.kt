@@ -44,14 +44,17 @@ class MessagesFragment : Fragment() {
 
         listView = view.findViewById(R.id.messages_list)
         listView.layoutManager = LinearLayoutManager(requireContext()).apply { reverseLayout = true }
-        listView.adapter = MessagesListAdapter(messageViewModel.messages.value!!)
+        listView.adapter = MessagesListAdapter(
+            messageViewModel.messages.value!!,
+            messageViewModel.messagesLoading.value!!
+        )
 
-        messageViewModel.messageAdded.observe(viewLifecycleOwner) {
-            if (it) { onMessageAdded() }
-        }
+        messageViewModel.messageAdded.observe(viewLifecycleOwner, ::onMessageAdded)
 
-        messageViewModel.messageLoaded.observe(viewLifecycleOwner) {
-            if (it) { onMessageLoaded() }
+        messageViewModel.messageLoaded.observe(viewLifecycleOwner, ::onMessageLoaded)
+
+        messageViewModel.messagesLoading.observe(viewLifecycleOwner) {
+            (listView.adapter as MessagesListAdapter).loading = it
         }
 
         val messageInput = view.findViewById<TextInputLayout>(R.id.message_input)
@@ -65,15 +68,20 @@ class MessagesFragment : Fragment() {
         }
     }
 
-    private fun onMessageAdded() {
-        (listView.adapter as MessagesListAdapter).notifyItemInserted(0)
-        listView.scrollToPosition(0)
-        messageViewModel.afterAdded()
+    private fun onMessageAdded(added: Boolean) {
+        if (added) {
+            listView.adapter?.notifyItemInserted(0)
+            listView.scrollToPosition(0)
+            messageViewModel.afterAdded()
+        }
     }
 
-    private fun onMessageLoaded() {
-        (listView.adapter as MessagesListAdapter)
-            .notifyItemInserted(messageViewModel.messages.value!!.size)
-        messageViewModel.afterLoaded()
+    private fun onMessageLoaded(loaded: Boolean) {
+        if (loaded) {
+            listView.adapter
+                ?.notifyItemInserted(messageViewModel.messages.value!!.size)
+            listView.scrollToPosition(0)
+            messageViewModel.afterLoaded()
+        }
     }
 }

@@ -3,6 +3,7 @@ package com.jasper.prudibel.repository
 import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -24,7 +25,9 @@ object MessagesRepository {
     }
 
     fun read(userId: String, callBack: (QuerySnapshot?, FirebaseFirestoreException?) -> Unit) {
-        db.collection(userId).addSnapshotListener(callBack)
+        db.collection(userId)
+            .orderBy("date", Query.Direction.DESCENDING)
+            .addSnapshotListener(callBack)
     }
 
 }

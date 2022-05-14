@@ -14,13 +14,9 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputLayout
 import com.jasper.prudibel.R
 import com.jasper.prudibel.list.MessagesListAdapter
-import com.jasper.prudibel.model.Message
 import com.jasper.prudibel.view_model.MessageViewModel
-import com.jasper.prudibel.view_model.UserViewModel
 
 class MessagesFragment : Fragment() {
-
-    private val userViewModel: UserViewModel by viewModels()
 
     private val messageViewModel: MessageViewModel by viewModels()
 
@@ -50,25 +46,34 @@ class MessagesFragment : Fragment() {
         listView.layoutManager = LinearLayoutManager(requireContext()).apply { reverseLayout = true }
         listView.adapter = MessagesListAdapter(messageViewModel.messages.value!!)
 
-        messageViewModel.messages.observe(viewLifecycleOwner) { onMessageAdded() }
+        messageViewModel.messageAdded.observe(viewLifecycleOwner) {
+            if (it) { onMessageAdded() }
+        }
+
+        messageViewModel.messageLoaded.observe(viewLifecycleOwner) {
+            if (it) { onMessageLoaded() }
+        }
 
         val messageInput = view.findViewById<TextInputLayout>(R.id.message_input)
 
         messageInput.editText?.addTextChangedListener(textWatcher)
 
-        sendButton = view.findViewById(R.id.send_button)
-
-        sendButton.setOnClickListener {
-            messageViewModel.addMessage(Message(messageInput.editText!!.text.toString(), Message.SenderType.USER))
-            onMessageAdded()
-
-            messageViewModel.addMessage(Message(userViewModel.user.value!!.displayName!!, Message.SenderType.BOT))
-            onMessageAdded()
+        sendButton = view.findViewById<MaterialButton>(R.id.send_button).apply {
+            setOnClickListener {
+                messageViewModel.addMessage(messageInput.editText!!.text.toString())
+            }
         }
     }
 
     private fun onMessageAdded() {
         (listView.adapter as MessagesListAdapter).notifyItemInserted(0)
         listView.scrollToPosition(0)
+        messageViewModel.afterAdded()
+    }
+
+    private fun onMessageLoaded() {
+        (listView.adapter as MessagesListAdapter)
+            .notifyItemInserted(messageViewModel.messages.value!!.size)
+        messageViewModel.afterLoaded()
     }
 }

@@ -38,7 +38,7 @@ export const useUserCreate = (): ReturnTuple => {
       setSuccess(true);
     } catch (error: any) {
       if (error instanceof FirebaseError)
-        setError(error.code);
+        setError(error.message);
       else 
         setError(error.message);
     } finally {

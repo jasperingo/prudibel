@@ -1,13 +1,14 @@
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { StyleSheet, KeyboardAvoidingView, View, Platform } from 'react-native';
-// import { useNetInfo } from "@react-native-community/netinfo";
 import { AuthSwitch } from '../components/AuthSwitch';
 import { UIButton } from '../components/UIButton';
 import { UITextInput } from '../components/UITextInput';
 import { colorConfig } from '../configs/color.config';
 import { sizingConfig } from '../configs/sizing.config';
+import { useUserAuthValidation } from '../hooks/users/user-auth-validation.hook';
+import { useUserAuth } from '../hooks/users/user-auth.hook';
 import { RootStackParamList } from '../models/navigation.type';
 
 const styles = StyleSheet.create({
@@ -26,16 +27,49 @@ const styles = StyleSheet.create({
 });
 
 export const SignInScreen = () => {
-
-  const loading = false;
-
   const [email, setEmail] = useState('');
 
   const [password, setPassword] = useState('');
 
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList, 'SignIn'>>();
 
-  const onFormSubmit = () => {}
+  const [
+    isInvalid,
+    validError, 
+  ] = useUserAuthValidation();
+
+  const [
+    onSubmit, 
+    success,
+    loading, 
+    error
+  ] = useUserAuth();
+
+  useEffect(
+    ()=> {
+      if (success) {
+        navigation.reset({
+          index: 0,
+          routes: [{ name: 'Chat' }]
+        });
+      }
+      
+      if (error !== null) {
+        alert(error);
+      }
+
+      if (validError !== null) {
+        alert(validError);
+      }
+    },
+    [success, error, validError, navigation]
+  );
+
+  const onFormSubmit = () => {
+    if (!isInvalid(email, password)) {
+      onSubmit(email, password);
+    }
+  }
 
   return (
     <KeyboardAvoidingView 

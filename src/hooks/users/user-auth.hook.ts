@@ -1,17 +1,17 @@
 import { useNetInfo } from "@react-native-community/netinfo";
 import { FirebaseError } from "firebase/app";
-import { getAuth, updateProfile, createUserWithEmailAndPassword } from "firebase/auth/react-native";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth/react-native";
 import { useState } from "react";
 import { firebaseApp } from "../../configs/firebase.config";
 
 type ReturnTuple = [
-  onSubmit: (name: string, email: string, password: string)=> Promise<void>,
+  onSubmit: (email: string, password: string)=> Promise<void>,
   success: boolean,
   loading: boolean,
   error: string | null,
 ];
 
-export const useUserCreate = (): ReturnTuple => {
+export const useUserAuth = (): ReturnTuple => {
   const network = useNetInfo();
 
   const [loading, setLoading] = useState(false);
@@ -20,7 +20,7 @@ export const useUserCreate = (): ReturnTuple => {
 
   const [error, setError] = useState<string | null>(null);
 
-  const onSubmit = async (displayName: string, email: string, password: string) => {
+  const onSubmit = async (email: string, password: string) => {
     if (!network.isConnected) {
       setError('No internet connection');
       return;
@@ -31,9 +31,7 @@ export const useUserCreate = (): ReturnTuple => {
     setSuccess(false);
 
     try {
-      const userCredentials = await createUserWithEmailAndPassword(getAuth(firebaseApp), email, password);
-    
-      await updateProfile(userCredentials.user, { displayName });
+      await signInWithEmailAndPassword(getAuth(firebaseApp), email, password);
 
       setSuccess(true);
     } catch (error: any) {

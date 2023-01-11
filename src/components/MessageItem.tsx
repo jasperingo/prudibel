@@ -46,13 +46,15 @@ const styles = StyleSheet.create({
 });
 
 export const MessageItem = ({ message: { content, date, id, from } }: { message: Message; }) => {
+  const time = new Date(date);
+
   return (
     <View style={[styles.container, from === 'user' ? styles.meContainer : null]}>
       <View style={[styles.box, from === 'user' ? styles.meBox : null]}>
         <Text>{ content }</Text>
         <View style={styles.bottom}>
           <Ionicons name={id !== undefined ? 'checkmark' : 'time'} color={colorConfig.colorError} style={styles.status} />
-          <Text style={styles.date}>{ (new Date(date)).toDateString() }</Text>
+          <Text style={styles.date}>{ time.toLocaleTimeString() }, { time.toDateString() }</Text>
         </View>
       </View>
     </View>

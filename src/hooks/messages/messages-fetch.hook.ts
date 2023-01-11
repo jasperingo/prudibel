@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
 import { Unsubscribe } from "firebase/auth/react-native";
-import { collection, onSnapshot, getFirestore } from "firebase/firestore";
+import { collection, onSnapshot, getFirestore, query, orderBy } from "firebase/firestore";
 import Message from "../../models/message.model";
 
 type ReturnType = [
@@ -31,7 +31,7 @@ export const useMessageList = (): ReturnType => {
       setLoading(true);
     }
 
-    const q = collection(getFirestore(), userId);
+    const q = query(collection(getFirestore(), userId), orderBy('date', 'desc'));
 
     return onSnapshot(q, (querySnapshot) => {
       const messages: Message[] = [];

@@ -54,6 +54,16 @@ export const ChatScreen = () => {
     retryFetch
   ] = useMessageList();
 
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <TouchableOpacity activeOpacity={0.6} onPress={onSignOutClicked}>
+          <Ionicons name='log-out-outline' size={sizingConfig.xxLarge} color={colorConfig.colorOnPrimary} />
+        </TouchableOpacity>
+      ),
+    });
+  }, [navigation]);
+
   useEffect(() => {
     if (signOutSuccess) {
       navigation.reset({
@@ -73,15 +83,17 @@ export const ChatScreen = () => {
     }
   }, [user, loading, error, fetchMessages]);
 
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerRight: () => (
-        <TouchableOpacity activeOpacity={0.6} onPress={onSignOutClicked}>
-          <Ionicons name='log-out-outline' size={sizingConfig.xxLarge} color={colorConfig.colorOnPrimary} />
-        </TouchableOpacity>
-      ),
-    });
-  }, [navigation]);
+  useEffect(() => {
+    if (loaded) {
+      replyMessage([{ content: 'Hi', date: Date.now(), from: 'user' }]);
+    }
+  }, [loaded, replyMessage]);
+
+  useEffect(() => {
+    if (list.length > 0 && list[0].from === 'user') {
+      replyMessage(list);
+    }
+  }, [list, replyMessage]);
 
   const onSignOutClicked = () => {
     Alert.alert(
@@ -99,14 +111,6 @@ export const ChatScreen = () => {
       ]
     );
   }
-
-  useEffect(() => {  
-    if (list.length > 0 && list[0].from === 'user') {
-      replyMessage(list);
-    } else if (loaded && list.length === 0) {
-      replyMessage([{ content: 'Hi', date: Date.now(), from: 'user' }]);
-    }
-  }, [list, loaded, replyMessage]);
 
   const sendMessage = (content: string) => {
     createMessage({

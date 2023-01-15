@@ -4,7 +4,7 @@ import validator from 'validator';
 type StringOrNull = string | null;
 
 type ReturnType = [
-  validate: (fullName: string, email: string, password: string)=> boolean,
+  validate: (fullName: string, email: string, password: string, passwordConfirm: string)=> boolean,
   nameError: StringOrNull,
   emailError: StringOrNull,
   passwordError: StringOrNull
@@ -18,7 +18,7 @@ export const useUserCreateValidation = (): ReturnType => {
 
   const [passwordError, setPasswordError] = useState<StringOrNull>(null);
 
-  const validate = (fullName: string, email: string, password: string)=> {
+  const validate = (fullName: string, email: string, password: string, passwordConfirm: string)=> {
 
     let error = false;
 
@@ -39,6 +39,9 @@ export const useUserCreateValidation = (): ReturnType => {
     if (validator.isEmpty(password) || !validator.isLength(password, { min: 5 })) {
       error = true;
       setPasswordError('Password must contain miinimum of 5 characters');
+    } else if (password !== passwordConfirm) {
+      error = true;
+      setPasswordError('Password does not match password confirmation');
     } else {
       setPasswordError(null)
     }

@@ -125,11 +125,11 @@ export const ChatScreen = () => {
 
       <FlatList 
         data={list}
+        inverted={true}
         style={styles.list}
         keyExtractor={(item)=> `message-${item.id}-${item.date}`}
-        inverted={true}
-        renderItem={({ item })=> (
-          <MessageItem message={item} />
+        renderItem={({ item, index })=> (
+          <MessageItem message={item} index={index} list={list} />
         )}
         ListFooterComponent={renderFooter([
           {

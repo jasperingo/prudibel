@@ -2,7 +2,6 @@ export default interface Message {
   id?: string;
   content: string;
   date: number;
-  key?: number;
+  replyId?: number;
   from: 'user' | 'chatbot';
 }
-

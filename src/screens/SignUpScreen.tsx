@@ -33,6 +33,8 @@ export const SignUpScreen = () => {
 
   const [password, setPassword] = useState('');
 
+  const [passwordConfirm, setPasswordConfirm] = useState('');
+
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList, 'SignUp'>>();
 
   const [
@@ -50,7 +52,7 @@ export const SignUpScreen = () => {
   ] = useUserCreate();
 
   const onFormSubmit = () => {
-    if (!isInvalid(fullName, email, password)) {
+    if (!isInvalid(fullName, email, password, passwordConfirm)) {
       onSubmit(fullName, email, password);
     }
   }
@@ -104,7 +106,15 @@ export const SignUpScreen = () => {
           onChangeText={setPassword} 
           />
 
-        <UIButton text="Sign In" loading={loading} onClick={onFormSubmit} />
+        <UITextInput 
+          label="Confirm password" 
+          value={passwordConfirm} 
+          disabled={loading}
+          passwordInput={true}
+          onChangeText={setPasswordConfirm} 
+          />
+
+        <UIButton text="Sign Up" loading={loading} onClick={onFormSubmit} />
 
         <AuthSwitch type='signin' onPress={()=> navigation.navigate('SignIn')} />       
 
